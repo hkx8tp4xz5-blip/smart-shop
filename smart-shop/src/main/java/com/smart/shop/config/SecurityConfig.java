@@ -41,7 +41,10 @@ public class SecurityConfig {
             .exceptionHandling(ex -> ex
                 .accessDeniedPage("/403")
             )
-            .headers(headers -> headers.frameOptions(policy -> policy.sameOrigin()))
+            .headers(headers -> headers
+                .frameOptions(policy -> policy.sameOrigin())
+                .cacheControl())
+
             .csrf(csrf -> csrf.disable());
         return http.build();
     }

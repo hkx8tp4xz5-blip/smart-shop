@@ -1,0 +1,127 @@
+/* =============================================
+   Brand: Smart Product Information Management System
+   Style: Business-Minimalist Glassmorphism
+   ============================================= */
+
+:root {
+  /* ---- Primary Color ---- */
+  --color-primary: #3B82F6;
+  --color-primary-hover: #2563EB;
+  --color-primary-light: rgba(59, 130, 246, 0.08);
+  --color-primary-border: rgba(59, 130, 246, 0.2);
+
+  /* ---- Neutral / Text ---- */
+  --color-text-primary: #1A1D26;
+  --color-text-secondary: #5A6270;
+  --color-text-tertiary: #8A94A6;
+  --color-text-inverse: #FFFFFF;
+
+  /* ---- Surface / Background ---- */
+  --color-bg-start: #F0F4F8;
+  --color-bg-end: #E8EEF2;
+  --color-bg-glass: rgba(255, 255, 255, 0.35);
+  --color-bg-glass-hover: rgba(255, 255, 255, 0.5);
+  --color-glass-border: rgba(255, 255, 255, 0.7);
+  --color-glass-highlight: rgba(255, 255, 255, 0.4);
+  --color-glass-shadow: rgba(0, 0, 0, 0.04);
+  --color-glass-shadow-hover: rgba(0, 0, 0, 0.06);
+  --color-divider: rgba(0, 0, 0, 0.04);
+
+  /* ---- Sidebar ---- */
+  --color-sidebar-bg: rgba(255, 255, 255, 0.6);
+  --color-sidebar-border: rgba(0, 0, 0, 0.04);
+  --color-nav-hover: rgba(59, 130, 246, 0.08);
+  --color-nav-active-indicator: #3B82F6;
+
+  /* ---- Stat Cards ---- */
+  --color-stat-label: #5A6270;
+  --color-stat-value: #1A1D26;
+  --color-stat-trend-up: #10B981;
+  --color-stat-trend-down: #EF4444;
+
+  /* ---- Chart / Table ---- */
+  --color-chart-line: #3B82F6;
+  --color-chart-fill: rgba(59, 130, 246, 0.1);
+  --color-table-header: #F8FAFC;
+  --color-table-border: rgba(0, 0, 0, 0.06);
+  --color-table-row-hover: rgba(59, 130, 246, 0.04);
+
+  /* ---- Status Colors ---- */
+  --state-success: #10B981;
+  --state-warning: #F59E0B;
+  --state-error: #EF4444;
+  --state-info: #3B82F6;
+
+  /* ---- Typography ---- */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", "Fira Code", "Consolas", monospace;
+
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-base: 14px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+  --text-2xl: 22px;
+  --text-3xl: 28px;
+  --text-4xl: 36px;
+
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+
+  /* ---- Radius ---- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ---- Spacing ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.05);
+  --shadow-glass: 0 4px 20px rgba(0, 0, 0, 0.04);
+
+  /* ---- Glass Card ---- */
+  --glass-blur: 12px;
+  --glass-saturate: 150%;
+}
+
+/* ---- Typography Utility Classes ---- */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-inverse { color: var(--color-text-inverse); }
+
+/* ---- Glass Card Base ---- */
+.glass-card {
+  background: var(--color-bg-glass);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 0.5px solid var(--color-glass-border);
+  border-top: 1px solid var(--color-glass-highlight);
+  border-left: 1px solid var(--color-glass-highlight);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--radius-xl);
+  transition: all 0.2s ease;
+}
+
+.glass-card:hover {
+  background: var(--color-bg-glass-hover);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}

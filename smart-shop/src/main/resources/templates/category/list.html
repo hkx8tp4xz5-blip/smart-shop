@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>分类管理</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="page-header">
+    <h2><i class="fa-solid fa-folder" style="color:#3B82F6;margin-right:6px"></i>分类管理</h2>
+    <div class="breadcrumb">首页 / 分类管理</div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <span><i class="fa-solid fa-list" style="color:#3B82F6;margin-right:6px"></i>分类列表</span>
+        <a th:href="@{/category/add}" class="btn btn-success btn-sm"><i class="fa-solid fa-plus"></i> 添加分类</a>
+    </div>
+    <div class="card-body" style="padding:0;">
+        <table>
+            <thead>
+                <tr><th>ID</th><th>分类名称</th><th>描述</th><th>操作</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="cat : ${categories}">
+                    <td th:text="${cat.id}">1</td>
+                    <td><span class="tag" th:text="${cat.name}">分类</span></td>
+                    <td th:text="${cat.descp}">描述</td>
+                    <td class="actions">
+                        <a th:href="@{/category/edit/{id}(id=${cat.id})}" class="btn btn-outline btn-sm"><i class="fa-solid fa-pen-to-square"></i> 编辑</a>
+                        <a th:href="@{/category/delete/{id}(id=${cat.id})}" class="btn btn-danger btn-sm"
+                           onclick="return confirm('确定删除该分类吗？')"><i class="fa-solid fa-trash-can"></i> 删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

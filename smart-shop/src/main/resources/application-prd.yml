@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mysql://129.204.142.57:3306/2024zzw?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true
+    username: root
+    password: Bigdata22!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      max-lifetime: 30000
+      idle-timeout: 10000
+      validation-timeout: 3000
+      connection-test-query: SELECT 1
+  redis:
+    host: localhost
+    port: 6379

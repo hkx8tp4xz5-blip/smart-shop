@@ -1,0 +1,29 @@
+{
+  "data": [
+    {
+      "id": "page-dashboard",
+      "title": "仪表盘",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1712476800000,
+      "canvasData": {
+        "x": 0,
+        "y": 12,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dashboard.html",
+        "interactions": []
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": false,
+    "deviceType": "desktop",
+    "projectName": "智能商品信息管理系统",
+    "windowSize": {
+      "width": 800,
+      "height": 600
+    }
+  }
+}

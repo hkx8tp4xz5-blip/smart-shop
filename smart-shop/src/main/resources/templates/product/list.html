@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="page-header">
+    <h2><i class="fa-solid fa-cube" style="color:#3B82F6;margin-right:6px"></i>商品列表</h2>
+    <div class="breadcrumb"><i class="fa-solid fa-chevron-right" style="font-size:10px;margin:0 4px"></i> 首页 <i class="fa-solid fa-chevron-right" style="font-size:10px;margin:0 4px"></i> 商品管理</div>
+</div>
+
+<div class="card">
+    <div class="card-header" style="display:block;">
+        <form th:action="@{/product/list}" method="get" class="form-row">
+            <div class="form-group">
+                <label>分类</label>
+                <select name="categoryId">
+                    <option value="0">全部分类</option>
+                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}" th:selected="${cat.id == categoryId}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>商品名称</label>
+                <input type="text" name="productName" th:value="${productName}" placeholder="请输入名称">
+            </div>
+            <div class="form-group">
+                <label>价格区间</label>
+                <div style="display:flex;gap:4px;align-items:center;">
+                    <input type="number" step="0.01" name="minPrice" th:value="${minPrice}" placeholder="最低" style="width:90px">
+                    <span style="color:var(--text-muted)">—</span>
+                    <input type="number" step="0.01" name="maxPrice" th:value="${maxPrice}" placeholder="最高" style="width:90px">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> 搜索</button>
+            <a th:href="@{/product/list}" class="btn btn-outline"><i class="fa-solid fa-rotate"></i> 重置</a>
+            <a sec:authorize="hasRole('ROLE_admin')" th:href="@{/product/add}" class="btn btn-success" style="margin-left:auto"><i class="fa-solid fa-plus"></i> 添加商品</a>
+        </form>
+    </div>
+    <div class="card-body" style="padding:0;">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>商品名称</th>
+                    <th>分类</th>
+                    <th>价格</th>
+                    <th>发布日期</th>
+                    <th sec:authorize="hasRole('ROLE_admin')">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="product : ${pageInfo.list}">
+                    <td th:text="${product.id}">1</td>
+                    <td th:text="${product.name}">商品名称</td>
+                    <td><span class="tag" th:text="${product.categoryName}">分类</span></td>
+                    <td><span class="price" th:text="'¥' + ${product.price}">0.00</span></td>
+                    <td th:text="${product.releaseDate}">2026-01-01</td>
+                    <td sec:authorize="hasRole('ROLE_admin')" class="actions">
+                        <a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-outline btn-sm"><i class="fa-solid fa-pen-to-square"></i> 编辑</a>
+                        <a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-danger btn-sm"
+                           onclick="return confirm('确定删除该商品吗？')"><i class="fa-solid fa-trash-can"></i> 删除</a>
+                    </td>
+                </tr>
+                <tr th:if="${pageInfo.list.empty}">
+                    <td colspan="6" class="empty-state" style="padding:40px;text-align:center;">暂无数据</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<form id="pageForm" th:action="@{/product/list}" method="get">
+    <input type="hidden" name="categoryId" th:value="${categoryId}">
+    <input type="hidden" name="productName" th:value="${productName}">
+    <input type="hidden" name="minPrice" th:value="${minPrice}">
+    <input type="hidden" name="maxPrice" th:value="${maxPrice}">
+    <input type="hidden" name="pageSize" value="10">
+</form>
+
+<div class="pagination" th:if="${pageInfo.total > 0}">
+    <a th:attr="onclick='goPage(1)'" th:classappend="${pageInfo.pageNum == 1} ? 'disabled' : ''"><i class="fa-solid fa-angles-left"></i></a>
+    <a th:attr="onclick='goPage(' + ${pageInfo.prePage} + ')'" th:classappend="${!pageInfo.hasPreviousPage} ? 'disabled' : ''"><i class="fa-solid fa-angle-left"></i></a>
+    <span class="current" th:text="${pageInfo.pageNum}">1</span>
+    <span style="color:var(--text-muted);font-size:13px;" th:text="'/' + ${pageInfo.pages}">/1</span>
+    <a th:attr="onclick='goPage(' + ${pageInfo.nextPage} + ')'" th:classappend="${!pageInfo.hasNextPage} ? 'disabled' : ''"><i class="fa-solid fa-angle-right"></i></a>
+    <a th:attr="onclick='goPage(' + ${pageInfo.pages} + ')'" th:classappend="${pageInfo.pageNum == pageInfo.pages} ? 'disabled' : ''"><i class="fa-solid fa-angles-right"></i></a>
+    <span style="margin-left:12px;color:var(--text-muted);font-size:13px;">共 <strong style="color:var(--text);" th:text="${pageInfo.total}">0</strong> 条</span>
+</div>
+
+<script>
+    function goPage(pageNum) {
+        var form = document.getElementById('pageForm');
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'pageNum';
+        input.value = pageNum;
+        form.appendChild(input);
+        form.submit();
+    }
+</script>
+</body>
+</html>

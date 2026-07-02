@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>供应商管理</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="page-header">
+    <h2><i class="fa-solid fa-truck" style="color:#3B82F6;margin-right:6px"></i>供应商管理</h2>
+    <div class="breadcrumb">首页 / 供应商管理</div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <span><i class="fa-solid fa-list" style="color:#3B82F6;margin-right:6px"></i>供应商列表</span>
+        <a th:href="@{/supplier/add}" class="btn btn-success btn-sm"><i class="fa-solid fa-plus"></i> 添加供应商</a>
+    </div>
+    <div class="card-body" style="padding:0;">
+        <table>
+            <thead>
+                <tr><th>ID</th><th>供应商名称</th><th>联系人</th><th>联系电话</th><th>地址</th><th>操作</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="s : ${suppliers}">
+                    <td th:text="${s.id}">1</td>
+                    <td th:text="${s.name}">供应商</td>
+                    <td th:text="${s.contact}">联系人</td>
+                    <td th:text="${s.phone}">电话</td>
+                    <td th:text="${s.address}">地址</td>
+                    <td class="actions">
+                        <a th:href="@{/supplier/edit/{id}(id=${s.id})}" class="btn btn-outline btn-sm"><i class="fa-solid fa-pen-to-square"></i> 编辑</a>
+                        <a th:href="@{/supplier/delete/{id}(id=${s.id})}" class="btn btn-danger btn-sm"
+                           onclick="return confirm('确定删除该供应商吗？')"><i class="fa-solid fa-trash-can"></i> 删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

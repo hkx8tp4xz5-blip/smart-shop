@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.shop.mapper.ProductMapper">
+
+    <resultMap id="ProductResult" type="com.smart.shop.entity.Product">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="photoUrl" column="photo_url"/>
+        <result property="price" column="price"/>
+        <result property="descp" column="descp"/>
+        <result property="releaseDate" column="release_date"/>
+        <result property="catId" column="cat_id"/>
+        <result property="categoryName" column="categoryName"/>
+    </resultMap>
+
+    <select id="findByCondition" resultMap="ProductResult">
+        SELECT p.*, c.name AS categoryName
+        FROM t_product p
+        LEFT JOIN t_category c ON p.cat_id = c.id
+        <where>
+            <if test="categoryId != null and categoryId != 0">
+                AND p.cat_id = #{categoryId}
+            </if>
+            <if test="productName != null and productName != ''">
+                AND p.name LIKE CONCAT('%', #{productName}, '%')
+            </if>
+            <if test="minPrice != null">
+                AND p.price &gt;= #{minPrice}
+            </if>
+            <if test="maxPrice != null">
+                AND p.price &lt;= #{maxPrice}
+            </if>
+        </where>
+        ORDER BY p.id DESC
+    </select>
+
+</mapper>

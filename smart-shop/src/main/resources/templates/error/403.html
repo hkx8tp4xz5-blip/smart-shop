@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>权限不足</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="error-page">
+    <div class="error-code">403</div>
+    <p><i class="fa-solid fa-circle-exclamation" style="color:#3B82F6;margin-right:4px"></i>抱歉，您没有权限访问此页面</p>
+    <a class="btn btn-primary" th:href="@{/welcome}" target="_top"><i class="fa-solid fa-house"></i> 返回首页</a>
+</div>
+</body>
+</html>

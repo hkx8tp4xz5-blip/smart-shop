@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能商品信息管理系统 - 仪表盘</title>
+    <style id="theme-vars">
+/* =============================================
+   Brand: Smart Product Information Management System
+   Style: Business-Minimalist Glassmorphism
+   ============================================= */
+
+:root {
+  /* ---- Primary Color ---- */
+  --color-primary: #3B82F6;
+  --color-primary-hover: #2563EB;
+  --color-primary-light: rgba(59, 130, 246, 0.08);
+  --color-primary-border: rgba(59, 130, 246, 0.2);
+
+  /* ---- Neutral / Text ---- */
+  --color-text-primary: #1A1D26;
+  --color-text-secondary: #5A6270;
+  --color-text-tertiary: #8A94A6;
+  --color-text-inverse: #FFFFFF;
+
+  /* ---- Surface / Background ---- */
+  --color-bg-start: #F0F4F8;
+  --color-bg-end: #E8EEF2;
+  --color-bg-glass: rgba(255, 255, 255, 0.35);
+  --color-bg-glass-hover: rgba(255, 255, 255, 0.5);
+  --color-glass-border: rgba(255, 255, 255, 0.7);
+  --color-glass-highlight: rgba(255, 255, 255, 0.4);
+  --color-glass-shadow: rgba(0, 0, 0, 0.04);
+  --color-glass-shadow-hover: rgba(0, 0, 0, 0.06);
+  --color-divider: rgba(0, 0, 0, 0.04);
+
+  /* ---- Sidebar ---- */
+  --color-sidebar-bg: rgba(255, 255, 255, 0.6);
+  --color-sidebar-border: rgba(0, 0, 0, 0.04);
+  --color-nav-hover: rgba(59, 130, 246, 0.08);
+  --color-nav-active-indicator: #3B82F6;
+
+  /* ---- Stat Cards ---- */
+  --color-stat-label: #5A6270;
+  --color-stat-value: #1A1D26;
+  --color-stat-trend-up: #10B981;
+  --color-stat-trend-down: #EF4444;
+
+  /* ---- Chart / Table ---- */
+  --color-chart-line: #3B82F6;
+  --color-chart-fill: rgba(59, 130, 246, 0.1);
+  --color-table-header: #F8FAFC;
+  --color-table-border: rgba(0, 0, 0, 0.06);
+  --color-table-row-hover: rgba(59, 130, 246, 0.04);
+
+  /* ---- Status Colors ---- */
+  --state-success: #10B981;
+  --state-warning: #F59E0B;
+  --state-error: #EF4444;
+  --state-info: #3B82F6;
+
+  /* ---- Typography ---- */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", "Fira Code", "Consolas", monospace;
+
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-base: 14px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+  --text-2xl: 22px;
+  --text-3xl: 28px;
+  --text-4xl: 36px;
+
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+
+  /* ---- Radius ---- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ---- Spacing ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.05);
+  --shadow-glass: 0 4px 20px rgba(0, 0, 0, 0.04);
+
+  /* ---- Glass Card ---- */
+  --glass-blur: 12px;
+  --glass-saturate: 150%;
+}
+
+/* ---- Typography Utility Classes ---- */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-inverse { color: var(--color-text-inverse); }
+
+/* ---- Glass Card Base ---- */
+.glass-card {
+  background: var(--color-bg-glass);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 0.5px solid var(--color-glass-border);
+  border-top: 1px solid var(--color-glass-highlight);
+  border-left: 1px solid var(--color-glass-highlight);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--radius-xl);
+  transition: all 0.2s ease;
+}
+
+.glass-card:hover {
+  background: var(--color-bg-glass-hover);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+  }
+  @layer base {
+    body { background: var(--color-background); color: var(--color-text-primary); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background: linear-gradient(135deg, var(--color-bg-start), var(--color-bg-end));">
+    <main>
+      <!-- ============================================ -->
+      <!-- Layout: Sidebar + Main Content                -->
+      <!-- ============================================ -->
+      <div class="flex min-h-screen">
+
+        <!-- ========== LEFT SIDEBAR ========== -->
+        <aside class="w-[240px] shrink-0 min-h-screen flex flex-col" style="background: var(--color-sidebar-bg); border-right: 0.5px solid var(--color-sidebar-border); backdrop-filter: blur(16px);">
+          <!-- Logo -->
+          <div class="flex items-center gap-3 px-6 h-16 shrink-0" style="border-bottom: 0.5px solid var(--color-sidebar-border);">
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg" style="background: var(--color-primary);">
+              <i data-lucide="box" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="text-base font-semibold truncate" style="color: var(--color-text-primary);">商品管理系统</span>
+          </div>
+
+          <!-- Navigation -->
+          <nav class="flex-1 px-3 py-4 space-y-1">
+            <!-- 仪表盘 (active) -->
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" style="background: var(--color-primary-light); color: var(--color-primary); border-left: 3px solid var(--color-primary);" data-dom-id="nav-dashboard">
+              <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0"></i>
+              <span class="truncate">仪表盘</span>
+            </a>
+            <!-- 商品管理 -->
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" style="color: var(--color-text-secondary); transition: all 0.15s;" data-dom-id="nav-products">
+              <i data-lucide="package" class="w-4 h-4 shrink-0"></i>
+              <span class="truncate">商品管理</span>
+            </a>
+            <!-- 库存管理 -->
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" style="color: var(--color-text-secondary); transition: all 0.15s;" data-dom-id="nav-inventory">
+              <i data-lucide="warehouse" class="w-4 h-4 shrink-0"></i>
+              <span class="truncate">库存管理</span>
+            </a>
+            <!-- 订单管理 -->
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" style="color: var(--color-text-secondary); transition: all 0.15s;" data-dom-id="nav-orders">
+              <i data-lucide="shopping-cart" class="w-4 h-4 shrink-0"></i>
+              <span class="truncate">订单管理</span>
+            </a>
+            <!-- 数据报表 -->
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" style="color: var(--color-text-secondary); transition: all 0.15s;" data-dom-id="nav-reports">
+              <i data-lucide="bar-chart-3" class="w-4 h-4 shrink-0"></i>
+              <span class="truncate">数据报表</span>
+            </a>
+            <!-- 系统设置 -->
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" style="color: var(--color-text-secondary); transition: all 0.15s;" data-dom-id="nav-settings">
+              <i data-lucide="settings" class="w-4 h-4 shrink-0"></i>
+              <span class="truncate">系统设置</span>
+            </a>
+          </nav>
+
+          <!-- Bottom: User avatar -->
+          <div class="shrink-0 px-4 py-4" style="border-top: 0.5px solid var(--color-sidebar-border);">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold shrink-0" style="background: var(--color-primary); color: white;">管</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium truncate" style="color: var(--color-text-primary);">管理员</p>
+                <p class="text-xs truncate" style="color: var(--color-text-tertiary);">admin@system.com</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- ========== MAIN CONTENT AREA ========== -->
+        <div class="flex-1 min-w-0 flex flex-col">
+
+          <!-- Top Navigation Bar -->
+          <header class="h-16 shrink-0 flex items-center justify-between px-6" style="background: var(--color-bg-glass); backdrop-filter: blur(12px); border-bottom: 0.5px solid var(--color-glass-border);">
+            <!-- Left: Page title -->
+            <div class="flex items-center gap-2">
+              <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--color-text-tertiary);"></i>
+              <h1 class="text-lg font-semibold" style="color: var(--color-text-primary);">仪表盘</h1>
+            </div>
+            <!-- Right: Search + Notif + Avatar -->
+            <div class="flex items-center gap-4">
+              <!-- Search -->
+              <div class="relative">
+                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style="color: var(--color-text-tertiary);"></i>
+                <input type="text" placeholder="搜索商品、订单..." class="w-56 h-9 pl-9 pr-3 text-sm rounded-lg outline-none" style="background: var(--color-bg-glass); border: 0.5px solid var(--color-glass-border); color: var(--color-text-primary);" data-dom-id="search-input">
+              </div>
+              <!-- Notification bell -->
+              <button class="relative w-9 h-9 flex items-center justify-center rounded-lg" style="color: var(--color-text-secondary);" data-dom-id="btn-notifications">
+                <i data-lucide="bell" class="w-5 h-5"></i>
+                <span class="absolute -top-0.5 -right-0.5 w-4 h-4 flex items-center justify-center rounded-full text-[10px] font-medium text-white" style="background: var(--state-error);">3</span>
+              </button>
+              <!-- Avatar -->
+              <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold shrink-0" style="background: var(--color-primary); color: white;">管</div>
+            </div>
+          </header>
+
+          <!-- Page Content -->
+          <div class="flex-1 p-6 space-y-6 overflow-auto">
+
+            <!-- ===== 4 Statistics Cards ===== -->
+            <div class="grid grid-cols-4 gap-6">
+              <!-- Card 1: 总商品数 -->
+              <div class="glass-card p-5" data-dom-id="stat-total-products">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm" style="color: var(--color-stat-label);">总商品数</span>
+                  <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: var(--color-primary-light);">
+                    <i data-lucide="package" class="w-4 h-4" style="color: var(--color-primary);"></i>
+                  </div>
+                </div>
+                <p class="text-3xl font-bold mb-1" style="color: var(--color-stat-value); font-variant-numeric: tabular-nums;">2,847</p>
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="trending-up" class="w-3.5 h-3.5" style="color: var(--color-stat-trend-up);"></i>
+                  <span class="text-xs font-medium" style="color: var(--color-stat-trend-up);">+8.2%</span>
+                  <span class="text-xs" style="color: var(--color-text-tertiary);">较上月</span>
+                </div>
+              </div>
+              <!-- Card 2: 库存预警 -->
+              <div class="glass-card p-5" data-dom-id="stat-warning">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm" style="color: var(--color-stat-label);">库存预警</span>
+                  <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: rgba(245, 158, 11, 0.1);">
+                    <i data-lucide="alert-triangle" class="w-4 h-4" style="color: var(--state-warning);"></i>
+                  </div>
+                </div>
+                <p class="text-3xl font-bold mb-1" style="color: var(--color-stat-value); font-variant-numeric: tabular-nums;">23</p>
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="trending-down" class="w-3.5 h-3.5" style="color: var(--color-stat-trend-down);"></i>
+                  <span class="text-xs font-medium" style="color: var(--color-stat-trend-down);">-2.1%</span>
+                  <span class="text-xs" style="color: var(--color-text-tertiary);">较上月</span>
+                </div>
+              </div>
+              <!-- Card 3: 本月新增 -->
+              <div class="glass-card p-5" data-dom-id="stat-new-month">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm" style="color: var(--color-stat-label);">本月新增</span>
+                  <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: var(--color-primary-light);">
+                    <i data-lucide="plus-circle" class="w-4 h-4" style="color: var(--color-primary);"></i>
+                  </div>
+                </div>
+                <p class="text-3xl font-bold mb-1" style="color: var(--color-stat-value); font-variant-numeric: tabular-nums;">186</p>
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="trending-up" class="w-3.5 h-3.5" style="color: var(--color-stat-trend-up);"></i>
+                  <span class="text-xs font-medium" style="color: var(--color-stat-trend-up);">+12.5%</span>
+                  <span class="text-xs" style="color: var(--color-text-tertiary);">较上月</span>
+                </div>
+              </div>
+              <!-- Card 4: 待处理订单 -->
+              <div class="glass-card p-5" data-dom-id="stat-pending-orders">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm" style="color: var(--color-stat-label);">待处理订单</span>
+                  <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: rgba(239, 68, 68, 0.1);">
+                    <i data-lucide="file-text" class="w-4 h-4" style="color: var(--state-error);"></i>
+                  </div>
+                </div>
+                <p class="text-3xl font-bold mb-1" style="color: var(--color-stat-value); font-variant-numeric: tabular-nums;">47</p>
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="trending-down" class="w-3.5 h-3.5" style="color: var(--color-stat-trend-down);"></i>
+                  <span class="text-xs font-medium" style="color: var(--color-stat-trend-down);">-0.8%</span>
+                  <span class="text-xs" style="color: var(--color-text-tertiary);">较上月</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== Chart + Table Row ===== -->
+            <div class="flex gap-6">
+              <!-- Chart Section (left ~60%) -->
+              <div class="flex-1 glass-card p-6" data-dom-id="chart-sales-trend">
+                <div class="flex items-center justify-between mb-5">
+                  <h2 class="text-base font-semibold" style="color: var(--color-text-primary);">销售趋势</h2>
+                  <div class="flex items-center gap-1 text-xs" style="color: var(--color-text-tertiary);">
+                    <span>近6个月</span>
+                    <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                  </div>
+                </div>
+                <!-- CSS-only Bar Chart -->
+                <div class="flex items-end justify-between gap-3 h-36 pt-2" style="border-bottom: 1px solid var(--color-table-border); padding-left: 0; padding-right: 0;">
+                  <div class="flex-1 flex flex-col items-center gap-2">
+                    <div class="w-full rounded-t-sm" style="height: 60%; background: linear-gradient(to top, var(--color-primary), var(--color-primary-hover)); border-radius: 4px 4px 0 0;"></div>
+                    <span class="text-xs" style="color: var(--color-text-tertiary);">1月</span>
+                  </div>
+                  <div class="flex-1 flex flex-col items-center gap-2">
+                    <div class="w-full rounded-t-sm" style="height: 75%; background: linear-gradient(to top, var(--color-primary), var(--color-primary-hover)); border-radius: 4px 4px 0 0;"></div>
+                    <span class="text-xs" style="color: var(--color-text-tertiary);">2月</span>
+                  </div>
+                  <div class="flex-1 flex flex-col items-center gap-2">
+                    <div class="w-full rounded-t-sm" style="height: 45%; background: linear-gradient(to top, var(--color-primary), var(--color-primary-hover)); border-radius: 4px 4px 0 0;"></div>
+                    <span class="text-xs" style="color: var(--color-text-tertiary);">3月</span>
+                  </div>
+                  <div class="flex-1 flex flex-col items-center gap-2">
+                    <div class="w-full rounded-t-sm" style="height: 82%; background: linear-gradient(to top, var(--color-primary), var(--color-primary-hover)); border-radius: 4px 4px 0 0;"></div>
+                    <span class="text-xs" style="color: var(--color-text-tertiary);">4月</span>
+                  </div>
+                  <div class="flex-1 flex flex-col items-center gap-2">
+                    <div class="w-full rounded-t-sm" style="height: 68%; background: linear-gradient(to top, var(--color-primary), var(--color-primary-hover)); border-radius: 4px 4px 0 0;"></div>
+                    <span class="text-xs" style="color: var(--color-text-tertiary);">5月</span>
+                  </div>
+                  <div class="flex-1 flex flex-col items-center gap-2">
+                    <div class="w-full rounded-t-sm" style="height: 90%; background: linear-gradient(to top, var(--color-primary), var(--color-primary-hover)); border-radius: 4px 4px 0 0;"></div>
+                    <span class="text-xs" style="color: var(--color-text-tertiary);">6月</span>
+                  </div>
+                </div>
+                <!-- Chart legend / summary -->
+                <div class="flex items-center justify-between mt-3">
+                  <div class="flex items-center gap-2 text-xs" style="color: var(--color-text-tertiary);">
+                    <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background: var(--color-primary);"></span>
+                    <span>销售额</span>
+                  </div>
+                  <span class="text-xs font-medium" style="color: var(--color-stat-trend-up);">同比 +15.3%</span>
+                </div>
+              </div>
+
+              <!-- Data Table Section (right ~40%) -->
+              <div class="w-[40%] glass-card p-6" data-dom-id="table-recent-products">
+                <div class="flex items-center justify-between mb-4">
+                  <h2 class="text-base font-semibold" style="color: var(--color-text-primary);">最近商品</h2>
+                  <button class="text-xs font-medium px-3 py-1.5 rounded-lg" style="color: var(--color-primary); border: 0.5px solid var(--color-primary-border); background: var(--color-primary-light);">查看全部</button>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm" style="border-collapse: collapse;">
+                    <thead>
+                      <tr class="text-xs font-medium" style="color: var(--color-text-tertiary);">
+                        <th class="text-left py-2.5 pr-3 whitespace-nowrap">商品名称</th>
+                        <th class="text-left py-2.5 pr-3 whitespace-nowrap">SKU</th>
+                        <th class="text-right py-2.5 pr-3 whitespace-nowrap">库存</th>
+                        <th class="text-center py-2.5 pr-3 whitespace-nowrap">状态</th>
+                        <th class="text-right py-2.5 whitespace-nowrap">操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Row 1 -->
+                      <tr class="group" style="border-top: 0.5px solid var(--color-table-border); transition: background 0.15s;">
+                        <td class="py-3 pr-3">
+                          <span class="text-sm font-medium truncate max-w-[120px] inline-block align-middle" style="color: var(--color-text-primary);" title="无线蓝牙耳机 Pro">无线蓝牙耳机 Pro</span>
+                        </td>
+                        <td class="py-3 pr-3 whitespace-nowrap" style="color: var(--color-text-tertiary);">SKU-001</td>
+                        <td class="py-3 pr-3 text-right whitespace-nowrap font-medium" style="color: var(--color-text-primary);">856</td>
+                        <td class="py-3 pr-3 text-center">
+                          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap" style="background: rgba(16, 185, 129, 0.1); color: var(--state-success);">
+                            <span class="w-1.5 h-1.5 rounded-full" style="background: var(--state-success);"></span>
+                            在售
+                          </span>
+                        </td>
+                        <td class="py-3 text-right">
+                          <div class="flex items-center justify-end gap-2">
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-secondary); border: 0.5px solid var(--color-table-border);">编辑</button>
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-tertiary); border: 0.5px solid var(--color-table-border);">查看</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <!-- Row 2 -->
+                      <tr class="group" style="border-top: 0.5px solid var(--color-table-border); transition: background 0.15s;">
+                        <td class="py-3 pr-3">
+                          <span class="text-sm font-medium truncate max-w-[120px] inline-block align-middle" style="color: var(--color-text-primary);" title="智能手表 S3">智能手表 S3</span>
+                        </td>
+                        <td class="py-3 pr-3 whitespace-nowrap" style="color: var(--color-text-tertiary);">SKU-002</td>
+                        <td class="py-3 pr-3 text-right whitespace-nowrap font-medium" style="color: var(--color-text-primary);">234</td>
+                        <td class="py-3 pr-3 text-center">
+                          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap" style="background: rgba(16, 185, 129, 0.1); color: var(--state-success);">
+                            <span class="w-1.5 h-1.5 rounded-full" style="background: var(--state-success);"></span>
+                            在售
+                          </span>
+                        </td>
+                        <td class="py-3 text-right">
+                          <div class="flex items-center justify-end gap-2">
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-secondary); border: 0.5px solid var(--color-table-border);">编辑</button>
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-tertiary); border: 0.5px solid var(--color-table-border);">查看</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <!-- Row 3 -->
+                      <tr class="group" style="border-top: 0.5px solid var(--color-table-border); transition: background 0.15s;">
+                        <td class="py-3 pr-3">
+                          <span class="text-sm font-medium truncate max-w-[120px] inline-block align-middle" style="color: var(--color-text-primary);" title="机械键盘 K8">机械键盘 K8</span>
+                        </td>
+                        <td class="py-3 pr-3 whitespace-nowrap" style="color: var(--color-text-tertiary);">SKU-003</td>
+                        <td class="py-3 pr-3 text-right whitespace-nowrap font-medium" style="color: var(--color-stat-trend-down);">12</td>
+                        <td class="py-3 pr-3 text-center">
+                          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap" style="background: rgba(239, 68, 68, 0.1); color: var(--state-error);">
+                            <span class="w-1.5 h-1.5 rounded-full" style="background: var(--state-error);"></span>
+                            缺货
+                          </span>
+                        </td>
+                        <td class="py-3 text-right">
+                          <div class="flex items-center justify-end gap-2">
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-secondary); border: 0.5px solid var(--color-table-border);">编辑</button>
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-tertiary); border: 0.5px solid var(--color-table-border);">查看</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <!-- Row 4 -->
+                      <tr class="group" style="border-top: 0.5px solid var(--color-table-border); transition: background 0.15s;">
+                        <td class="py-3 pr-3">
+                          <span class="text-sm font-medium truncate max-w-[120px] inline-block align-middle" style="color: var(--color-text-primary);" title="USB-C 扩展坞">USB-C 扩展坞</span>
+                        </td>
+                        <td class="py-3 pr-3 whitespace-nowrap" style="color: var(--color-text-tertiary);">SKU-004</td>
+                        <td class="py-3 pr-3 text-right whitespace-nowrap font-medium" style="color: var(--color-text-primary);">423</td>
+                        <td class="py-3 pr-3 text-center">
+                          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap" style="background: rgba(16, 185, 129, 0.1); color: var(--state-success);">
+                            <span class="w-1.5 h-1.5 rounded-full" style="background: var(--state-success);"></span>
+                            在售
+                          </span>
+                        </td>
+                        <td class="py-3 text-right">
+                          <div class="flex items-center justify-end gap-2">
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-secondary); border: 0.5px solid var(--color-table-border);">编辑</button>
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-tertiary); border: 0.5px solid var(--color-table-border);">查看</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <!-- Row 5 -->
+                      <tr class="group" style="border-top: 0.5px solid var(--color-table-border); transition: background 0.15s;">
+                        <td class="py-3 pr-3">
+                          <span class="text-sm font-medium truncate max-w-[120px] inline-block align-middle" style="color: var(--color-text-primary);" title="便携充电宝 20000mAh">便携充电宝 20000mAh</span>
+                        </td>
+                        <td class="py-3 pr-3 whitespace-nowrap" style="color: var(--color-text-tertiary);">SKU-005</td>
+                        <td class="py-3 pr-3 text-right whitespace-nowrap font-medium" style="color: var(--color-text-primary);">158</td>
+                        <td class="py-3 pr-3 text-center">
+                          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap" style="background: rgba(245, 158, 11, 0.1); color: var(--state-warning);">
+                            <span class="w-1.5 h-1.5 rounded-full" style="background: var(--state-warning);"></span>
+                            预警
+                          </span>
+                        </td>
+                        <td class="py-3 text-right">
+                          <div class="flex items-center justify-end gap-2">
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-secondary); border: 0.5px solid var(--color-table-border);">编辑</button>
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-tertiary); border: 0.5px solid var(--color-table-border);">查看</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <!-- Row 6 -->
+                      <tr class="group" style="border-top: 0.5px solid var(--color-table-border); transition: background 0.15s;">
+                        <td class="py-3 pr-3">
+                          <span class="text-sm font-medium truncate max-w-[120px] inline-block align-middle" style="color: var(--color-text-primary);" title="高清网络摄像头">高清网络摄像头</span>
+                        </td>
+                        <td class="py-3 pr-3 whitespace-nowrap" style="color: var(--color-text-tertiary);">SKU-006</td>
+                        <td class="py-3 pr-3 text-right whitespace-nowrap font-medium" style="color: var(--color-text-primary);">0</td>
+                        <td class="py-3 pr-3 text-center">
+                          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap" style="background: rgba(239, 68, 68, 0.1); color: var(--state-error);">
+                            <span class="w-1.5 h-1.5 rounded-full" style="background: var(--state-error);"></span>
+                            缺货
+                          </span>
+                        </td>
+                        <td class="py-3 text-right">
+                          <div class="flex items-center justify-end gap-2">
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-secondary); border: 0.5px solid var(--color-table-border);">编辑</button>
+                            <button class="text-xs px-2 py-1 rounded" style="color: var(--color-text-tertiary); border: 0.5px solid var(--color-table-border);">查看</button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== Inventory Distribution (full-width) ===== -->
+            <div class="glass-card p-6" data-dom-id="section-inventory-distribution">
+              <div class="flex items-center justify-between mb-5">
+                <h2 class="text-base font-semibold" style="color: var(--color-text-primary);">库存分布</h2>
+                <span class="text-xs" style="color: var(--color-text-tertiary);">更新时间: 2026-07-01</span>
+              </div>
+              <div class="grid grid-cols-4 gap-6">
+                <!-- 正常 -->
+                <div class="flex items-center gap-4 p-4 rounded-xl" style="background: var(--color-bg-glass); border: 0.5px solid var(--color-glass-border);">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style="background: rgba(16, 185, 129, 0.1);">
+                    <i data-lucide="check-circle" class="w-5 h-5" style="color: var(--state-success);"></i>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-xs mb-0.5" style="color: var(--color-stat-label);">正常</p>
+                    <p class="text-xl font-bold" style="color: var(--color-stat-value); font-variant-numeric: tabular-nums;">2,134</p>
+                  </div>
+                </div>
+                <!-- 预警 -->
+                <div class="flex items-center gap-4 p-4 rounded-xl" style="background: var(--color-bg-glass); border: 0.5px solid var(--color-glass-border);">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style="background: rgba(245, 158, 11, 0.1);">
+                    <i data-lucide="alert-triangle" class="w-5 h-5" style="color: var(--state-warning);"></i>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-xs mb-0.5" style="color: var(--color-stat-label);">预警</p>
+                    <p class="text-xl font-bold" style="color: var(--color-stat-value); font-variant-numeric: tabular-nums;">23</p>
+                  </div>
+                </div>
+                <!-- 缺货 -->
+                <div class="flex items-center gap-4 p-4 rounded-xl" style="background: var(--color-bg-glass); border: 0.5px solid var(--color-glass-border);">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style="background: rgba(239, 68, 68, 0.1);">
+                    <i data-lucide="x-circle" class="w-5 h-5" style="color: var(--state-error);"></i>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-xs mb-0.5" style="color: var(--color-stat-label);">缺货</p>
+                    <p class="text-xl font-bold" style="color: var(--color-stat-value); font-variant-numeric: tabular-nums;">8</p>
+                  </div>
+                </div>
+                <!-- 停售 -->
+                <div class="flex items-center gap-4 p-4 rounded-xl" style="background: var(--color-bg-glass); border: 0.5px solid var(--color-glass-border);">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style="background: rgba(107, 114, 128, 0.1);">
+                    <i data-lucide="stop-circle" class="w-5 h-5" style="color: var(--color-text-tertiary);"></i>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-xs mb-0.5" style="color: var(--color-stat-label);">停售</p>
+                    <p class="text-xl font-bold" style="color: var(--color-stat-value); font-variant-numeric: tabular-nums;">42</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+    <style>
+      /* Nav item hover */
+      nav a:not([style*="background: var(--color-primary-light)"]) { transition: background 0.15s, color 0.15s; }
+      nav a:not([style*="background: var(--color-primary-light)"]):hover { background: var(--color-nav-hover); }
+      nav a:not([style*="background: var(--color-primary-light)"]):focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+
+      /* Table row hover */
+      tbody tr:hover { background: var(--color-table-row-hover); }
+
+      /* Button hover */
+      button:not([data-lucide-processed]) { transition: opacity 0.15s; }
+      .glass-card button { transition: background 0.15s, opacity 0.15s; }
+      .glass-card button:hover { opacity: 0.8; }
+      .glass-card button:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 1px; }
+
+      /* Top nav notification bell hover */
+      header button:hover { background: var(--color-nav-hover); }
+
+      /* Section link / CTA hover */
+      [style*="color: var(--color-primary)"]:hover { opacity: 0.85; }
+
+      /* Reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        nav a, tbody tr, .glass-card, button, .glass-card:hover { transition-duration: 0.01ms !important; transform: none !important; }
+      }
+    </style>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

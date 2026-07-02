@@ -1,0 +1,25 @@
+{
+  "root": {
+    "nodeId": "root",
+    "kind": "project-shell",
+    "pageIds": ["page-dashboard"],
+    "output": null,
+    "sharedRegions": [],
+    "privateRegions": ["full-page"],
+    "mutableSlots": [],
+    "status": "generated",
+    "children": [
+      {
+        "nodeId": "page-dashboard",
+        "kind": "page-leaf",
+        "pageIds": ["page-dashboard"],
+        "output": "pages/dashboard.html",
+        "sharedRegions": [],
+        "privateRegions": ["full-page"],
+        "mutableSlots": [],
+        "status": "generated",
+        "children": []
+      }
+    ]
+  }
+}

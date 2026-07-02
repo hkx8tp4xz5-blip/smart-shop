@@ -1,0 +1,27 @@
+# Compiled class files
+target/
+*.class
+
+# IDE config
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Maven
+dependency-reduced-pom.xml
+*.jar
+*.war
+
+# Logs
+*.log
+
+# TRAE
+.trae/

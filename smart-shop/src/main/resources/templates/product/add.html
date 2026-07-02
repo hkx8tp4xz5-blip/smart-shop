@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加商品</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="page-header">
+    <h2><i class="fa-solid fa-plus-circle" style="color:#3B82F6;margin-right:6px"></i>添加商品</h2>
+    <div class="breadcrumb">首页 / 商品管理 / 添加商品</div>
+</div>
+<div class="card">
+    <div class="card-header"><i class="fa-solid fa-rectangle-list" style="color:#3B82F6;margin-right:6px"></i>商品信息</div>
+    <div class="card-body">
+        <form th:action="@{/product/add}" method="post">
+            <div class="form-group" style="margin-bottom:18px">
+                <label><i class="fa-solid fa-folder" style="margin-right:4px"></i>分类</label>
+                <select name="catId" required style="width:240px">
+                    <option value="">请选择分类</option>
+                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-bottom:18px">
+                <label><i class="fa-solid fa-tag" style="margin-right:4px"></i>商品名称</label>
+                <input type="text" name="name" required style="width:360px" placeholder="请输入商品名称">
+            </div>
+            <div class="form-group" style="margin-bottom:18px">
+                <label><i class="fa-solid fa-yen-sign" style="margin-right:4px"></i>价格</label>
+                <input type="number" step="0.01" name="price" required style="width:200px" placeholder="0.00">
+            </div>
+            <div class="form-group" style="margin-bottom:18px">
+                <label><i class="fa-solid fa-pen" style="margin-right:4px"></i>描述</label>
+                <input type="text" name="descp" style="width:400px" placeholder="请输入商品描述">
+            </div>
+            <div class="form-group" style="margin-bottom:18px">
+                <label><i class="fa-solid fa-calendar" style="margin-right:4px"></i>发布日期</label>
+                <input type="date" name="releaseDate" required style="width:200px">
+            </div>
+            <div style="display:flex;gap:8px;">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> 保存</button>
+                <a th:href="@{/product/list}" class="btn btn-outline"><i class="fa-solid fa-xmark"></i> 取消</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

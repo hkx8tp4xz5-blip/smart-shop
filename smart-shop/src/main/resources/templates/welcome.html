@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>首页概览</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+
+<div class="page-header">
+    <h2><i class="fa-solid fa-compass" style="color:#3B82F6;margin-right:6px"></i>首页概览</h2>
+    <div class="breadcrumb">首页概览</div>
+</div>
+
+<!-- 统计卡片 (动态数据) -->
+<div class="stat-cards">
+    <div class="stat-card stat-card--blue">
+        <div class="stat-card__icon"><i class="fa-solid fa-cube"></i></div>
+        <div class="stat-card__body">
+            <div class="stat-card__value" th:text="${productCount}">0</div>
+            <div class="stat-card__label">商品总数</div>
+        </div>
+    </div>
+    <div class="stat-card stat-card--green">
+        <div class="stat-card__icon"><i class="fa-solid fa-folder"></i></div>
+        <div class="stat-card__body">
+            <div class="stat-card__value" th:text="${categoryCount}">0</div>
+            <div class="stat-card__label">分类数量</div>
+        </div>
+    </div>
+    <div class="stat-card stat-card--purple">
+        <div class="stat-card__icon"><i class="fa-solid fa-user"></i></div>
+        <div class="stat-card__body">
+            <div class="stat-card__value">2</div>
+            <div class="stat-card__label">注册用户</div>
+        </div>
+    </div>
+    <div class="stat-card stat-card--orange">
+        <div class="stat-card__icon"><i class="fa-solid fa-layer-group"></i></div>
+        <div class="stat-card__body">
+            <div class="stat-card__value">5</div>
+            <div class="stat-card__label">系统模块</div>
+        </div>
+    </div>
+</div>
+
+<!-- 月度趋势 + 最新商品 -->
+<div class="dashboard-row">
+    <div class="dashboard-col-6">
+        <div class="card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-chart-line" style="color:#3B82F6;margin-right:6px"></i>月度趋势</span>
+                <span style="font-size:12px;color:var(--text-muted);font-weight:400;">
+                    共 <strong th:text="${productCount}">0</strong> 件商品
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="chart-bars" th:if="${not #lists.isEmpty(monthlyTrend)}">
+                    <div class="chart-bar-group" th:each="m : ${monthlyTrend}">
+                        <div class="chart-bar"
+                             th:style="'height:' + (${m.monthCount} * 100 / ${maxMonth} < 10 ? 10 : ${m.monthCount} * 100 / ${maxMonth}) + '%'"></div>
+                        <div class="chart-bar-label" th:text="${m.monthStr}">1月</div>
+                    </div>
+                </div>
+                <div th:if="${#lists.isEmpty(monthlyTrend)}" style="text-align:center;padding:40px;color:var(--text-muted);">
+                    暂无月度数据
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-col-4">
+        <div class="card" style="height:100%;">
+            <div class="card-header">
+                <span><i class="fa-solid fa-clock" style="color:#3B82F6;margin-right:6px"></i>最新商品</span>
+                <a th:href="@{/product/list}" class="btn btn-outline btn-sm"><i class="fa-solid fa-arrow-right"></i> 查看全部</a>
+            </div>
+            <div class="card-body" style="padding:0;">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>名称</th><th>分类</th><th>价格</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="p : ${recentProducts}">
+                            <td th:text="${p.id}">1</td>
+                            <td th:text="${p.name}">商品名</td>
+                            <td><span class="tag" th:text="${p.categoryName}">分类</span></td>
+                            <td><span class="price" th:text="'¥' + ${p.price}">¥0</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 库存分布 (动态数据) -->
+<div class="card">
+    <div class="card-header">
+        <span><i class="fa-solid fa-warehouse" style="color:#3B82F6;margin-right:6px"></i>分类库存分布</span>
+    </div>
+    <div class="card-body">
+        <div class="inventory-grid">
+            <div class="inventory-item" th:each="stat : ${categoryStats}">
+                <div class="inventory-value">
+                    <span class="inventory-dot" th:classappend="${stat.id == 1} ? 'green' : (${stat.id == 2} ? 'yellow' : (${stat.id == 3} ? 'red' : 'gray'))"></span>
+                    <span th:text="${stat.productCount}">0</span>
+                </div>
+                <div class="inventory-label" th:text="${stat.name}">分类</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

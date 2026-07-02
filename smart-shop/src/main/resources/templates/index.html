@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>智慧商品信息管理系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="topbar">
+    <span class="brand"><i class="fa-solid fa-boxes"></i> 智慧商品信息管理系统</span>
+    <div class="user-info">
+        <span><i class="fa-solid fa-user"></i> <strong sec:authentication="principal.username"></strong></span>
+        <a class="logout-btn" th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i> 退出</a>
+    </div>
+</div>
+
+<div class="layout">
+    <nav class="sidebar">
+        <div class="nav-group">菜单导航</div>
+        <a th:href="@{/welcome}" target="mainFrame" class="active" id="nav-welcome"><i class="fa-solid fa-compass"></i> 首页概览</a>
+        <a th:href="@{/product/list}" target="mainFrame" id="nav-products"><i class="fa-solid fa-cube"></i> 商品管理</a>
+        <a sec:authorize="hasRole('ROLE_admin')" th:href="@{/category/list}" target="mainFrame" id="nav-categories"><i class="fa-solid fa-folder"></i> 分类管理</a>
+        <a sec:authorize="hasRole('ROLE_admin')" th:href="@{/supplier/list}" target="mainFrame" id="nav-suppliers"><i class="fa-solid fa-truck"></i> 供应商管理</a>
+    </nav>
+
+    <iframe name="mainFrame" class="main" th:src="@{/welcome}"
+            style="border:none; width:100%; min-height:calc(100vh - 56px); padding: 0; background:transparent;"
+            frameborder="0"></iframe>
+</div>
+
+<script>
+    const links = document.querySelectorAll('.sidebar a');
+    links.forEach(function(a) {
+        a.addEventListener('click', function() {
+            links.forEach(function(l) { l.classList.remove('active'); });
+            this.classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>
